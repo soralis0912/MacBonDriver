@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "https://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Spaces</key>
+    <array>
+        <dict>
+            <key>Name</key><string>UHF</string>
+            <key>System</key><string>ISDB-T</string>
+            <key>Channels</key>
+            <array>
+                <dict>
+                    <key>Name</key><string>UHF 13ch</string>
+                    <key>FrequencyKHz</key><integer>473143</integer>
+                    <key>BandwidthKHz</key><integer>6000</integer>
+                </dict>
+                <dict>
+                    <key>Name</key><string>UHF 27ch</string>
+                    <key>FrequencyKHz</key><integer>557143</integer>
+                    <key>BandwidthKHz</key><integer>6000</integer>
+                </dict>
+            </array>
+        </dict>
+        <dict>
+            <key>Name</key><string>BS</string>
+            <key>System</key><string>ISDB-S</string>
+            <key>Channels</key>
+            <array>
+                <dict>
+                    <key>Name</key><string>BS01/TS0 (NHK BS)</string>
+                    <key>FrequencyKHz</key><integer>1049480</integer>
+                    <key>StreamID</key><integer>16400</integer>
+                </dict>
+                <dict>
+                    <key>Name</key><string>BS15/TS0 (NHK BS1)</string>
+                    <key>FrequencyKHz</key><integer>1318000</integer>
+                    <key>StreamID</key><integer>16625</integer>
+                </dict>
+            </array>
+        </dict>
+        <dict>
+            <key>Name</key><string>CATV (ISDB-C)</string>
+            <key>System</key><string>ISDB-C</string>
+            <key>Channels</key>
+            <array>
+                <dict>
+                    <key>Name</key><string>C14/TS1</string>
+                    <key>FrequencyKHz</key><integer>117000</integer>
+                    <key>BandwidthKHz</key><integer>6000</integer>
+                    <key>StreamID</key><integer>1</integer>
+                    <key>Flags</key>
+                    <array>
+                        <string>TSMF</string>
+                        <string>CATV</string>
+                    </array>
+                </dict>
+                <dict>
+                    <key>Name</key><string>C16/RawTSMF</string>
+                    <key>FrequencyKHz</key><integer>129000</integer>
+                    <key>BandwidthKHz</key><integer>6000</integer>
+                    <key>StreamID</key><integer>0</integer>
+                    <key>Flags</key>
+                    <array>
+                        <string>TSMF</string>
+                        <string>RawTSMF</string>
+                        <string>CATV</string>
+                    </array>
+                </dict>
+            </array>
+        </dict>
+    </array>
+</dict>
+</plist>

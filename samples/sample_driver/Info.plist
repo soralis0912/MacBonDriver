@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "https://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleExecutable</key><string>MBD_SampleUSB</string>
+    <key>CFBundleIdentifier</key><string>jp.macbondriver.sample-usb</string>
+    <key>CFBundleName</key><string>MBD_SampleUSB</string>
+    <key>CFBundlePackageType</key><string>BNDL</string>
+    <key>CFBundleShortVersionString</key><string>1.0.0</string>
+    <key>CFBundleVersion</key><string>1</string>
+    <key>NSPrincipalClass</key><string>MBDSampleUSBDriver</string>
+
+    <key>MBDAPIVersion</key><integer>1</integer>
+    <key>MBDDisplayName</key><string>Sample USB ISDB-T/S/C Driver</string>
+    <key>MBDDriverIdentifier</key><string>jp.macbondriver.sample-usb</string>
+    <key>MBDSupportedSystems</key>
+    <array>
+        <string>ISDB-T</string>
+        <string>ISDB-S</string>
+        <string>ISDB-C</string>
+    </array>
+    <key>MBDCapabilities</key>
+    <array>
+        <string>MultiTuner</string>
+        <string>LNB</string>
+        <string>TSMF</string>
+        <string>SmartCard</string>
+        <string>Hotplug</string>
+    </array>
+    <key>MBDUSBMatchList</key>
+    <array>
+        <dict>
+            <key>VendorID</key><integer>1720</integer>
+            <key>ProductID</key><integer>4203</integer>
+            <key>Description</key><string>PIXELA XIT-SQR100 (06b8:106b)</string>
+        </dict>
+    </array>
+    <key>MBDRequiresExternalHost</key><false/>
+    <key>MBDConfigFileName</key><string>MBD_SampleUSB</string>
+</dict>
+</plist>
