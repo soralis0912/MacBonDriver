@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "https://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleExecutable</key><string>MBD_SQR100</string>
+    <key>CFBundleIdentifier</key><string>jp.macbondriver.sqr100</string>
+    <key>CFBundleName</key><string>MBD_SQR100</string>
+    <key>CFBundlePackageType</key><string>BNDL</string>
+    <key>CFBundleShortVersionString</key><string>1.0.0</string>
+    <key>CFBundleVersion</key><string>1</string>
+    <key>NSPrincipalClass</key><string>MBDSQR100Driver</string>
+
+    <key>MBDAPIVersion</key><integer>1</integer>
+    <key>MBDDisplayName</key><string>PIXELA XIT-SQR100 (ISDB-T/S/C)</string>
+    <key>MBDDriverIdentifier</key><string>jp.macbondriver.sqr100</string>
+    <key>MBDSupportedSystems</key>
+    <array>
+        <string>ISDB-C</string>
+        <string>ISDB-T</string>
+        <string>ISDB-S</string>
+    </array>
+    <key>MBDCapabilities</key>
+    <array>
+        <string>MultiTuner</string>
+        <string>LNB</string>
+        <string>TSMF</string>
+        <string>SmartCard</string>
+        <string>Hotplug</string>
+    </array>
+    <key>MBDUSBMatchList</key>
+    <array>
+        <dict>
+            <key>VendorID</key><integer>1720</integer>
+            <key>ProductID</key><integer>4203</integer>
+            <key>Description</key><string>PIXELA XIT-SQR100 (06b8:106b)</string>
+        </dict>
+    </array>
+    <key>MBDRequiresExternalHost</key><false/>
+    <key>MBDConfigFileName</key><string>MBD_SQR100</string>
+</dict>
+</plist>

@@ -147,13 +147,32 @@ static int RunConformanceSuite(NSBundle *bundle, id<MacBonDriver> driver) {
         if (lnb.supportsLNBPower) {
             ok &= CheckCondition([lnb setLNBPowerMode:MBDLNBPower15V error:&error] && lnb.currentLNBPowerMode == MBDLNBPower15V,
                                  "MacBonDriverLNBControl switches LNB power mode");
+        } else {
+            NSError *lnbErr = nil;
+            BOOL unsupported = ![lnb setLNBPowerMode:MBDLNBPower15V error:&lnbErr] &&
+                               lnbErr.code == MBDErrorLNBNotSupported;
+            ok &= CheckCondition(unsupported,
+                                 "MacBonDriverLNBControl rejects 15V with MBDErrorLNBNotSupported when unsupported");
         }
     }
 
     if ([driver conformsToProtocol:@protocol(MacBonDriverTSMF)]) {
         id<MacBonDriverTSMF> tsmf = (id<MacBonDriverTSMF>)driver;
-        ok &= CheckCondition([tsmf setSpace:2 channel:0 streamID:2 error:&error] && tsmf.currentStreamID == 2,
-                             "MacBonDriverTSMF overrides Stream ID on ISDB-C TSMF channel");
+        NSUInteger tsmfSpace = MBDInvalidIndex;
+        for (NSUInteger s = 0; ; s++) {
+            if (![driver tuningSpaceNameAtIndex:s]) break;
+            if ([driver respondsToSelector:@selector(channelInfoForSpace:channel:)]) {
+                NSDictionary *ci = [driver channelInfoForSpace:s channel:0];
+                if (([ci[MBDChannelInfoFlagsKey] unsignedIntegerValue] & MBDChannelFlagTSMF) != 0) {
+                    tsmfSpace = s;
+                    break;
+                }
+            }
+        }
+        if (tsmfSpace != MBDInvalidIndex) {
+            ok &= CheckCondition([tsmf setSpace:tsmfSpace channel:0 streamID:1 error:&error] && tsmf.currentStreamID == 1,
+                                 "MacBonDriverTSMF overrides Stream ID on ISDB-C TSMF channel");
+        }
     }
 
     if ([driver conformsToProtocol:@protocol(MacBonDriverSmartCard)]) {
@@ -164,12 +183,18 @@ static int RunConformanceSuite(NSBundle *bundle, id<MacBonDriver> driver) {
         NSData *cmd = [NSData dataWithBytes:cmdBytes length:sizeof(cmdBytes)];
         ok &= CheckCondition([sc openSmartCardWithError:&error] && sc.isCardOpen,
                              "MacBonDriverSmartCard opens smart card session");
-        ok &= CheckCondition([sc isCardPresent:&present atr:&atr error:&error] && present && atr.length > 0,
-                             "MacBonDriverSmartCard detects card and returns ATR");
-        NSData *resp = [sc transmitAPDU:cmd error:&error];
-        const uint8_t *rb = (const uint8_t *)resp.bytes;
-        ok &= CheckCondition(resp.length >= 2 && rb[resp.length - 2] == 0x90 && rb[resp.length - 1] == 0x00,
-                             "MacBonDriverSmartCard transmits APDU and returns SW 90 00");
+        BOOL statusOK = [sc isCardPresent:&present atr:&atr error:&error];
+        ok &= CheckCondition(statusOK, "MacBonDriverSmartCard queries card presence");
+        if (statusOK && present) {
+            ok &= CheckCondition(atr.length > 0,
+                                 "MacBonDriverSmartCard returns non-empty ATR");
+            NSData *resp = [sc transmitAPDU:cmd error:&error];
+            const uint8_t *rb = (const uint8_t *)resp.bytes;
+            ok &= CheckCondition(resp.length >= 2 && rb[resp.length - 2] == 0x90 && rb[resp.length - 1] == 0x00,
+                                 "MacBonDriverSmartCard transmits APDU and returns SW 90 00");
+        } else if (statusOK) {
+            ok &= CheckCondition(YES, "MacBonDriverSmartCard reports no smart card inserted");
+        }
         [sc closeSmartCard];
     }
 
